@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import Registroe from './Registroe';
+import Prueba from './Prueba';
 
 ReactDOM.render(
-  <App />,
+  <Prueba />,
   document.getElementById('root')
 );
