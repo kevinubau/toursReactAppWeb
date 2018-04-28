@@ -1,9 +1,13 @@
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Registroe from './Registroe';
-import Prueba from './Prueba';
+import Registroe from './Components/Registroe';
+import './css/estilo.css';
+
+import 'bootstrap/dist/css/bootstrap.css';
+
 
 ReactDOM.render(
-  <Prueba />,
+  <Registroe /> ,
   document.getElementById('root')
 );
