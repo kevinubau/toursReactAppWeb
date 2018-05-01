@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-//import TimePicker from 'material-ui/TimePicker';
-//import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import axios from 'axios';
 
-class Registroe extends Component{
+class RegistroEmpresa extends Component{
     constructor(){
         super();
         this.state = {
@@ -153,4 +151,4 @@ class Registroe extends Component{
     }
 }
 
-export default Registroe;
+export default RegistroEmpresa;

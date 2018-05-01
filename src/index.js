@@ -1,13 +1,15 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Registroe from './Components/Registroe';
-import './css/estilo.css';
-
 import 'bootstrap/dist/css/bootstrap.css';
+import './css/estilo.css';
+import RegistroEmpresa from './Components/RegistroEmpresa';
+import ActivitiesRegister from './Components/ActivitiesRegister';
+
+
 
 
 ReactDOM.render(
-  <Registroe /> ,
+  <ActivitiesRegister /> ,
   document.getElementById('root')
 );
