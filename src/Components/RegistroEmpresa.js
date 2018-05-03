@@ -7,9 +7,9 @@ class RegistroEmpresa extends Component{
         super();
         this.state = {
 
-            nombreEmpresa:'a',
-            cedula:'b',
-            email:'c',
+            nombreEmpresa:'',
+            cedula:'',
+            email:'',
             telefono: 't',
             direccion: 'no',
             pass:'p',
@@ -74,7 +74,7 @@ class RegistroEmpresa extends Component{
   
     handleSubmit = (event) => {
 
-        axios.post('http://127.0.0.1:4000/', this.state)
+        axios.post('http://127.0.0.1:4000/registroEmpresa', this.state)
         .then(response => {
           console.log(response, 'Proceso exitoso!');
           
@@ -87,9 +87,10 @@ class RegistroEmpresa extends Component{
     
 
     
-    insertarEmpresa(user){
+    /*insertarEmpresa(user){
         console.log(user);
-    }
+    }*/
+
     render(){
         return(
             <div className='container'>
@@ -142,7 +143,7 @@ class RegistroEmpresa extends Component{
                     </FormGroup>
 
 
-                    <Button onClick={() => this.insertarEmpresa("usuario")}>Agregar</Button>
+                    <Button >Agregar</Button>
 
                
                 </Form>
