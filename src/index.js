@@ -9,6 +9,6 @@ import ImagesUpload from './Components/ImagesUpload';
 
 
 ReactDOM.render(
-  <RegistroEmpresa /> ,
+  <Img /> ,
   document.getElementById('root')
 );
