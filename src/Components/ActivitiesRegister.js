@@ -13,6 +13,8 @@ class ActivitiesRegister extends Component{
         this.state = {
 
             lugarSalida:'',
+            companyID: '',
+            activityID:'',
             lugarDestino:'debe ser elegido en mapa',
             fechaInicio: new Date(),
             fechaFin: new Date(),
@@ -111,7 +113,7 @@ class ActivitiesRegister extends Component{
   
     handleSubmit = (event) => {
 
-        axios.post('https://excursionesdatabase.firebaseapp.com/cargarActividad', this.state)//http://127.0.0.1:4000/cargarActividad
+        axios.post('https://excursionesdatabase.firebaseapp.com/cargarActividad', this.state)//
         .then(response => {
           console.log(response, 'Proceso exitoso!');
           
