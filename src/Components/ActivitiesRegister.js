@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Button, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon } from 'reactstrap';
 import TimePicker from 'material-ui/TimePicker';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {GridList, GridTile} from 'material-ui/GridList';
 import axios from 'axios';
 
 class ActivitiesRegister extends Component{
@@ -22,7 +23,7 @@ class ActivitiesRegister extends Component{
             precio:1000,
             descripcion:'no',
             recomendaciones:'no',
-            imagenes:[]
+            images:[]
             
             
         };
@@ -39,7 +40,7 @@ class ActivitiesRegister extends Component{
         this.handleCupo = this.handleCupo.bind(this);
         this.handleDescripcion = this.handleDescripcion.bind(this);
         this.handleRecomendaciones = this.handleRecomendaciones.bind(this);
-        
+        this.onImageChange = this.onImageChange.bind(this);
         
     }
 
@@ -110,7 +111,7 @@ class ActivitiesRegister extends Component{
   
     handleSubmit = (event) => {
 
-        axios.post('http://127.0.0.1:4000/cargarActividad', this.state)
+        axios.post('https://excursionesdatabase.firebaseapp.com/cargarActividad', this.state)//http://127.0.0.1:4000/cargarActividad
         .then(response => {
           console.log(response, 'Proceso exitoso!');
           
@@ -121,9 +122,46 @@ class ActivitiesRegister extends Component{
         
         event.preventDefault();
     }
+
+    onImageChange(event) {
+        
+
+        for(var index = 0;index<event.target.files.length;index++){
+            var file = event.target.files[index];
+            this.handleLoadImage(file);
+        }
+    }
+
+    handleLoadImage = (file) => {
+        if (file) {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+         
+            var arr = this.state.images;
+            arr.push(reader.result);
+            this.setState(() => ({
+                images: arr,
+              }));
+
+          };
+          reader.readAsDataURL(file);
+        }
+      }
     
     
     render(){
+        const styles = {
+            root: {
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'space-around',
+            },
+            gridList: {
+              width: 500,
+              height: 450,
+              overflowY: 'auto',
+            },
+          };
         return(
             
             <div className='container'>
@@ -224,9 +262,31 @@ class ActivitiesRegister extends Component{
 
                     <FormGroup>
                         <Label for="">Seleccione una o varias imágenes</Label>
-                        <Input  required type="file" name="imagenes" id="" multiple />
+                        <Input multiple type="file" onChange={this.onImageChange} className="filetype"/>
                         
                     </FormGroup>
+
+                    
+                    <div style={styles.root}>
+                    <MuiThemeProvider>
+                        <GridList
+                        cellHeight={180}
+                        style={styles.gridList}
+                        >
+                        
+                        {this.state.images.map((tile, index) => (
+                            <GridTile
+                            key={index+1}
+                            title={index+1}
+                            
+                            
+                            >
+                            <img src={tile} />
+                            </GridTile>
+                        ))}
+                        </GridList>
+                        </MuiThemeProvider>
+                    </div>
 
                     <Button>Agregar</Button>
 
