@@ -88,13 +88,14 @@ class App extends Component{
     }
 
     handleCupo(event){
-        this.setState({cupo: event.target.value});
+        this.setState({cupo: parseInt(event.target.value, 10)});
         console.log(event.target.value);
     }
 
     handlePrecio(event){
-        this.setState({precio: event.target.value});
-        console.log(event.target.value);
+        this.setState({precio: parseInt(event.target.value, 10)});
+        console.log(typeOf(event.target.value));
+    
     }
 
     handleDescripcion(event){
