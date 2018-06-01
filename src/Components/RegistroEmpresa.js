@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import axios from 'axios';
+import InputMask from 'react-input-mask';
+
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Paper from 'material-ui/Paper';
 
 class RegistroEmpresa extends Component{
     constructor(){
@@ -86,67 +90,70 @@ class RegistroEmpresa extends Component{
     }
     
 
-    
-    /*insertarEmpresa(user){
-        console.log(user);
-    }*/
-
     render(){
         return(
-            <div className='container'>
-                <h1>Registro de empresa</h1>
-                
-                <Form onSubmit={this.handleSubmit}>
-                     
-                    
-                    <FormGroup>
-                        
-                    <Label for="exampleText">Nombre comercial de la empresa</Label>
-                        <Input type="text" name="nombre" required id="" placeholder="Nombre de la empresa" value={this.state.nombreEmpresa} onChange={this.handleNombreEmpresa}/>
-                    </FormGroup>
-
-                    <FormGroup>
-                        
-                        <Label for="exampleText">Cédula jurídica</Label>
-                            <Input type="text" name="cedula" required id="" placeholder="Cédula" value={this.state.cedula} onChange={this.handleCedula}/>
-                    </FormGroup>
-
-                    <FormGroup>
-                        <Label for="exampleEmail">Email</Label>
-                        <Input type="email" name="email" id="email" placeholder="Email" value={this.state.email} onChange={this.handleEmail}/>
-                    </FormGroup>
-
-                    
-                    <FormGroup>
-                        
-                        <Label for="exampleText">Número de teléfono</Label>
-                            <Input type="text" name="telefono" required id="" placeholder="Telefono" value={this.state.telefono} onChange={this.handleTelefono}/>
-                    </FormGroup>
-
-                    <FormGroup>
-                        
-                        <Label for="exampleText">Dirección</Label>
-                            <Input type="text" name="direccion"  id="" placeholder="Dirección" value={this.state.direccion} onChange={this.handleDireccion}/>
-                    </FormGroup>
-
-                     <FormGroup>
-                        
-                        <Label for="exampleText">Contraseña</Label>
-                            <Input type="password" name="pass" required id="" placeholder="Contraseña" value={this.state.pass} onChange={this.handlePass}/>
-                    </FormGroup>
-
-
-                    <FormGroup>
-                        <Label for="exampleFile">Seleccione una o varias imágenes</Label>
-                        <Input type="file" name="file" id="exampleFile" multiple />
-                        
-                    </FormGroup>
-
-
-                    <Button >Agregar</Button>
-
+            <div>
                
-                </Form>
+            <div className='container'>
+            
+            <div id="formContainer" className='sm-col-8 md-col-8 lg-col-8' >
+                
+                <MuiThemeProvider>
+                    
+                    <Paper elevation={18} style={{padding:"50px"}}>
+                        <h1>Registro de empresa</h1>
+                        <Form onSubmit={this.handleSubmit}>
+                            
+                            
+                            <FormGroup>
+                                
+                            <Label for="exampleText">Nombre comercial de la empresa</Label>
+                                <Input type="text" name="nombre" required id="" placeholder="Nombre de la empresa" value={this.state.nombreEmpresa} onChange={this.handleNombreEmpresa}/>
+                            </FormGroup>
+
+                            <FormGroup>
+                                
+                                <Label for="exampleText">Cédula jurídica</Label>
+                                    <Input maskChar=" "tag={InputMask} mask="9-999-999999" type="text" name="cedula" required id="" placeholder="Cédula" value={this.state.cedula} onChange={this.handleCedula}/>
+                            </FormGroup>
+
+                            
+
+                            <FormGroup>
+                                <Label for="exampleEmail">Email</Label>
+                                <Input required type="email" name="email" id="email" placeholder="Email" value={this.state.email} onChange={this.handleEmail}/>
+                            </FormGroup>
+
+                            
+                            <FormGroup>
+                                
+                                <Label for="exampleText">Número de teléfono</Label>
+                                    <Input maskChar=" "tag={InputMask} mask="99999999" type="text" name="telefono" required id="" placeholder="Telefono" value={this.state.telefono} onChange={this.handleTelefono}/>
+                            </FormGroup>
+
+                            <FormGroup>
+                                
+                                <Label for="exampleText">Dirección</Label>
+                                    <Input required type="text" name="direccion"  id="" placeholder="Dirección" value={this.state.direccion} onChange={this.handleDireccion}/>
+                            </FormGroup>
+
+                            <FormGroup>
+                                
+                                <Label for="exampleText">Contraseña</Label>
+                                    <Input maxLength="16" type="password" name="pass" required id="" placeholder="Contraseña" value={this.state.pass} onChange={this.handlePass}/>
+                            </FormGroup>
+
+
+                            
+                            <Button style={{marginLeft: "40%"}} >Agregar</Button>
+
+                    
+                        </Form>
+                    
+                    </Paper>
+                </MuiThemeProvider>
+                </div>
+            </div>
             </div>
         );
     }

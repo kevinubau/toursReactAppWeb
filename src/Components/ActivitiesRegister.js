@@ -4,7 +4,10 @@ import TimePicker from 'material-ui/TimePicker';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {GridList, GridTile} from 'material-ui/GridList';
 import axios from 'axios';
+import Mapa from '../Components/Mapa/Mapa';
 
+import Paper from 'material-ui/Paper';
+import IconButton from 'material-ui/IconButton';
 class ActivitiesRegister extends Component{
 
     constructor(){
@@ -12,8 +15,6 @@ class ActivitiesRegister extends Component{
 
         this.state = {
             categoriasUI:[],
-
-
             lugarSalida:'',
             companyID: '',
             activityID:'',
@@ -28,8 +29,9 @@ class ActivitiesRegister extends Component{
             precio:1000,
             descripcion:'no',
             recomendaciones:'no',
-
-            images:[]
+            tempListaFiltros: [],
+            images:[],
+            titulo:''
             
             
         };
@@ -48,8 +50,28 @@ class ActivitiesRegister extends Component{
         this.handleRecomendaciones = this.handleRecomendaciones.bind(this);
         this.onImageChange = this.onImageChange.bind(this);
         this.handleDificultad = this.handleDificultad.bind(this);
+        this.handlerTitulo = this.handlerTitulo.bind(this);
         
     }
+
+    componentDidMount() {
+        fetch('https://excursionesdatabase.firebaseapp.com/getCategories')
+      .then((response) => response.json())
+      .then((responseJson) => {
+
+        this.setState({
+          isLoading: false,
+          tempListaFiltros: ['Seleccione'].concat(responseJson),
+        }, function(){
+
+        });
+
+      })
+      .catch((error) =>{
+        console.error(error);
+      });
+    }
+    
 
     handleLugarSalida(event) {
 
@@ -122,6 +144,11 @@ class ActivitiesRegister extends Component{
         console.log(event.target.value);
     }
 
+    handlerTitulo=(event)=>{
+        this.setState({titulo: event.target.value});
+        console.log(event.target.value);
+    }
+
   
     handleSubmit = (event) => {
 
@@ -161,6 +188,14 @@ class ActivitiesRegister extends Component{
           reader.readAsDataURL(file);
         }
       }
+
+      handlerImage = (key) =>{
+          console.log("handlerImage "+key);
+          var imagenes = this.state.images;
+          imagenes.splice(key, 1);
+          this.setState({images: imagenes});
+
+      }      
     
     
     render(){
@@ -176,13 +211,21 @@ class ActivitiesRegister extends Component{
               overflowY: 'auto',
             },
           };
+
+          const listFilter = this.state.tempListaFiltros.map((element, index) =>
+            <option key={index.toString()}>
+            {element}
+            </option>
+  );
         return(
             
             <div className='container'>
                 <div id="formContainer" className='sm-col-6 md-col-6 lg-col-8' >
                 
                 
-                
+                    <MuiThemeProvider>
+                    
+                    <Paper elevation={18} style={{padding:"50px", margin:"10px"}}>
                     <Form onSubmit={this.handleSubmit} >
                         
                         <h3>Registro de actividades</h3>
@@ -191,6 +234,17 @@ class ActivitiesRegister extends Component{
                             
                             <Label for="exampleText">Lugar de salida</Label>
                             <Input required type="text" name="lugarSalida" id="" placeholder="lugar de salida" value={this.state.lugarSalida} onChange={this.handleLugarSalida} />
+                        </FormGroup>
+
+                        <FormGroup>
+                            <Label for="exampleText">Seleccione punto de salida en el mapa</Label>
+                            <Mapa/>
+                        </FormGroup>
+
+                         <FormGroup>
+                            
+                            <Label for="">Titulo de la actividad</Label>
+                            <Input required type="text" name="tituloActividad" id="" placeholder="Titulo de la actividad" value={this.state.titulo} onChange={this.handlerTitulo} />
                         </FormGroup>
 
                         <FormGroup>
@@ -218,6 +272,7 @@ class ActivitiesRegister extends Component{
                                 name='horaInicio'
                                 value={this.state.horaInicio} 
                                 onChange={this.handleHoraInicio}
+                                style={{color: "white"}}
                             />
 
                         </MuiThemeProvider>
@@ -237,11 +292,7 @@ class ActivitiesRegister extends Component{
                         <FormGroup>
                             <Label for="">Categoria</Label>
                             <Input required type="select" name="categoria" id="" onChange={this.handleCategoria} value={this.state.categoria}>
-                                <option>Caminata</option>
-                                <option>Ciclismo</option>
-                                <option>Playa</option>
-                                <option>Camping</option>
-                                <option>...</option>
+                            {listFilter}
                                 
                             </Input>
                         </FormGroup>
@@ -296,29 +347,38 @@ class ActivitiesRegister extends Component{
 
                         
                         <div style={styles.root}>
-                        <MuiThemeProvider>
-                            <GridList
-                            cellHeight={180}
-                            style={styles.gridList}
-                            >
-                            
-                            {this.state.images.map((tile, index) => (
-                                <GridTile
-                                key={index+1}
-                                title={index+1}
+                            <MuiThemeProvider>
+                                <GridList
                                 
+                                cellHeight={180}
+                                style={styles.gridList}
                                 
                                 >
-                                <img src={tile} />
-                                </GridTile>
-                            ))}
-                            </GridList>
+                                
+                                {this.state.images.map((tile, index) => (
+                                    <GridTile
+                                        key={index+1}
+                                        title={index+1+" Eliminar"}   
+                                        onClick={ ()=>this.handlerImage(index) }   
+                                    >
+                                
+                                    
+                                        <img src={tile} />
+                                    </GridTile>
+
+                                ))}
+
+                                </GridList>
                             </MuiThemeProvider>
                         </div>
 
                         <Button>Agregar</Button>
 
                     </Form>
+                    </Paper>
+                    </MuiThemeProvider>
+                    
+                    
                 </div>
             </div>
         );

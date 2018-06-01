@@ -3,7 +3,7 @@ import { Button, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon } fr
 import TimePicker from 'material-ui/TimePicker';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import axios from 'axios';
-
+import NavBar from '../Components/NavBar';
 class App extends Component{
 
     constructor(){
@@ -128,7 +128,7 @@ class App extends Component{
         return(
             
             <div className='container'>
-                
+                <NavBar/>
                 <Form onSubmit={this.handleSubmit} >
                      
                     <h3>Registro de actividades</h3>
