@@ -24,35 +24,7 @@ class Img extends Component{
             var file = event.target.files[index];
             this.handleLoadImage(file);
         }
-        /*var imagenes = [];
-
         
-        var counter = 0;
-        
-        var reader;
-        console.log(typeof(imagenes));
-        while(counter < event.target.files.length){
-
-            
-            reader = new FileReader();
-            reader.onload = (e) => {
-    
-                imagenes.push(e.target.result);
-            };
-            reader.readAsDataURL(event.target.files[counter]);
-            
-            counter++;
-            
-        }
-        console.log(JSON.stringify(imagenes[0]));
-        this.setState({image: imagenes});*/
-        /*if (event.target.files && event.target.files[0]) {
-            let reader = new FileReader();
-            reader.onload = (e) => {
-                this.setState({image: e.target.result});
-            };
-            reader.readAsDataURL(event.target.files[0]);
-        }*/
        
     }
     
@@ -60,10 +32,7 @@ class Img extends Component{
         if (file) {
           const reader = new FileReader();
           reader.onloadend = () => {
-            // as a good practice, use a function to set state
-            //this.setState(() => ({
-            //  image: reader.result,
-            //}));
+            
             var arr = this.state.images;
             arr.push(reader.result);
             this.setState(() => ({

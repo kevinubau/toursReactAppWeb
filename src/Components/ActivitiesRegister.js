@@ -5,9 +5,9 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {GridList, GridTile} from 'material-ui/GridList';
 import axios from 'axios';
 import Mapa from '../Components/Mapa/Mapa';
-
 import Paper from 'material-ui/Paper';
-import IconButton from 'material-ui/IconButton';
+
+
 class ActivitiesRegister extends Component{
 
     constructor(){
@@ -16,9 +16,9 @@ class ActivitiesRegister extends Component{
         this.state = {
             categoriasUI:[],
             lugarSalida:'',
-            companyID: '',
+            
             activityID:'',
-            lugarDestino:'debe ser elegido en mapa',
+            lugarDestino:'',
             fechaInicio: new Date(),
             fechaFin: new Date(),
             horaInicio:new Date(),
@@ -31,7 +31,8 @@ class ActivitiesRegister extends Component{
             recomendaciones:'no',
             tempListaFiltros: [],
             images:[],
-            titulo:''
+            titulo:'',
+            email: JSON.parse(localStorage.getItem("usuario")).usuario
             
             
         };
@@ -218,8 +219,13 @@ class ActivitiesRegister extends Component{
             </option>
   );
         return(
-            
+
             <div className='container'>
+            {this.state.email ? 
+            
+            (
+
+                
                 <div id="formContainer" className='sm-col-6 md-col-6 lg-col-8' >
                 
                 
@@ -363,7 +369,7 @@ class ActivitiesRegister extends Component{
                                     >
                                 
                                     
-                                        <img src={tile} />
+                                        <img src={tile} alt={tile} />
                                     </GridTile>
 
                                 ))}
@@ -380,7 +386,22 @@ class ActivitiesRegister extends Component{
                     
                     
                 </div>
+            
+
+
+            ):(
+                
+                <div>
+
+                    No has iniciado sesion!
+                </div>
+
+
+            )
+        }
             </div>
+            
+            
         );
     }
 }

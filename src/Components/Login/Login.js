@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { Button, Form, FormGroup, Label, Input, NavItem, NavLink,Nav } from 'reactstrap';
 import axios from 'axios';
-import InicioEmpresa from "../InicioEmpresa";
+import ModalComponent from "../ModalComponent";
 import { browserHistory  } from 'react-router'
-
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
 
@@ -41,8 +40,8 @@ export default class Login extends Component {
 
 
   handleSubmit = (event) => {
-
-    axios.post('http://127.0.0.1:4000/login', this.state)
+    console.log("handle submit login ");
+    axios.post('https://excursionesdatabase.firebaseapp.com/login', this.state)
     .then(response => {
       console.log(response, 'Proceso exitoso!');
       if(response.data.usuario){
@@ -65,13 +64,14 @@ export default class Login extends Component {
         <div>
           <div className='container'>
 
+            <div className='col-md-12 text-md-center' style={{textAlign:"center", marginTop:20}}>
+              <h1>Sistema de administración de Tours.</h1>
+            </div>
             <MuiThemeProvider>
-              <div className='row' style={{textAlign:"center"}}>
-                <h1>Sistema de administración de Tours.</h1>
-              </div>
-              <Paper elevation={4}>
+              
+              <Paper elevation={4} >
 
-              <div id="formContainer" className='sm-col-6 md-col-6 lg-col-8' style={{marginTop:100}}>
+              <div id="formContainer" className='sm-col-6 md-col-6 lg-col-8' style={{marginTop:100, paddingTop:40}}>
                 <Form onSubmit={this.handleSubmit} >
                   <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
                     <Label for="exampleEmail" className="mr-sm-2">Correo</Label>
@@ -81,17 +81,33 @@ export default class Login extends Component {
                     <Label for="examplePassword" className="mr-sm-2">Contraseña</Label>
                     <Input required value={this.state.password} onChange={this.handlerPassword} type="password" name="password" id="examplePassword" placeholder="su contraseña" />
                   </FormGroup>
+
                   <div style={{margin: 20, textAlign:"center"}}>
-                      <Nav>
-                        <NavItem>
-                            <NavLink href="RegistroEmpresa">Crearme una cuenta</NavLink>
-                        </NavItem>
-                      </Nav>
+                    
+                      
+                      
+                      
                       <Button>   Login   </Button>
                       
                   </div >
                   
                 </Form>
+
+                <div className="d-flex justify-content-between">
+                      <div >
+                        <Nav>
+                          <NavItem>
+                              <NavLink href="RegistroEmpresa">Crearme una cuenta</NavLink>
+                          </NavItem>
+                        </Nav>
+                      
+                      </div>
+                      <div >
+                        <ModalComponent textoBoton={"Recuperar contraseña"}/>
+                      
+                      </div>
+                    
+                    </div>
               </div >
               
               

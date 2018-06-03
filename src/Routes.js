@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import {Router, Route, browserHistory, IndexRoute } from 'react-router';
+import {Router, Route, browserHistory } from 'react-router';
 
 import Login from "./Components/Login/Login";
 import RegistroEmpresa from "./Components/RegistroEmpresa";
 import ActivitiesRegister from "./Components/ActivitiesRegister";
-import Header from "./Components/Header";
+//import Header from "./Components/Header";
 import InicioEmpresa from "./Components/InicioEmpresa";
 
 

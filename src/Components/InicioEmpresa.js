@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {Link} from "react-router";
-import { Button, Form, FormGroup, Label, Input, NavItem, NavLink,Nav } from 'reactstrap';
+import { NavItem, NavLink,Nav } from 'reactstrap';
 
 
 class InicioEmpresa extends Component{
