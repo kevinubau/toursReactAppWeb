@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, Form, FormGroup, Label, Input, NavItem, NavLink,Nav } from 'reactstrap';
 import axios from 'axios';
 import ModalComponent from "../ModalComponent";
-import { browserHistory  } from 'react-router'
+import { browserHistory  } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
 
@@ -44,6 +44,7 @@ export default class Login extends Component {
     axios.post('https://excursionesdatabase.firebaseapp.com/login', this.state)
     .then(response => {
       console.log(response, 'Proceso exitoso!');
+      
       if(response.data.usuario){
         this.setState({login:true});
         localStorage.setItem("usuario",JSON.stringify(response.data));

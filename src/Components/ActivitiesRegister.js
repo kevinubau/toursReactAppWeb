@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
-import { Button, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon } from 'reactstrap';
+import {  Button, Form, FormGroup, Label, Input, InputGroup, InputGroupAddon } from 'reactstrap';
 import TimePicker from 'material-ui/TimePicker';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {GridList, GridTile} from 'material-ui/GridList';
 import axios from 'axios';
 import Mapa from '../Components/Mapa/Mapa';
 import Paper from 'material-ui/Paper';
-
+import ReactLoading from "react-loading";
+import Snackbar from '@material-ui/core/Snackbar';
+import { browserHistory  } from 'react-router';
 
 class ActivitiesRegister extends Component{
 
@@ -32,7 +34,14 @@ class ActivitiesRegister extends Component{
             tempListaFiltros: [],
             images:[],
             titulo:'',
-            email: JSON.parse(localStorage.getItem("usuario")).usuario
+            email: JSON.parse(localStorage.getItem("usuario")).usuario,
+            longitude:'',
+            latitude:'',
+            loading: false,
+            snackbarMessage:'',
+            open: false,
+            vertical: null,
+            horizontal: null, 
             
             
         };
@@ -78,6 +87,7 @@ class ActivitiesRegister extends Component{
 
         this.setState({lugarSalida: event.target.value});
         console.log(event.target.value);
+        console.log("LATITUDE: "+this.state.latitude+ "LONGITUDE: "+this.state.longitude);
     }
 
     handleLugarDestino(event) {
@@ -152,14 +162,26 @@ class ActivitiesRegister extends Component{
 
   
     handleSubmit = (event) => {
-
+        
+        this.setState({loading: true});
         axios.post('https://excursionesdatabase.firebaseapp.com/cargarActividad', this.state)//https://excursionesdatabase.firebaseapp.com
         .then(response => {
+
           console.log(response, 'Proceso exitoso!');
+          //this.setState({loading: false});
+          if(response.data){
+            setTimeout(function(){ browserHistory.push("/Inicio"); }, 2000);
+            //this.setState({snackbarMessage:response.data.responseMessage});
+            this.setState({snackbarMessage:"Actividad cargada!", vertical: 'bottom', horizontal: 'left', open:true, loading: false});
+
+          }
+
+
           
         })
         .catch(err => {
           console.log(err, 'Error');
+          this.setState({loading: false});
         });
         
         event.preventDefault();
@@ -196,10 +218,19 @@ class ActivitiesRegister extends Component{
           imagenes.splice(key, 1);
           this.setState({images: imagenes});
 
-      }      
+      }  
+      
+    handlerMapChange = (lat, long)=>{
+
+        console.log("latitude "+lat);
+        console.log("longitude "+long);
+        this.setState({latitude: lat, longitude: long});
+    }
     
     
     render(){
+        const { vertical, horizontal, open } = this.state;
+
         const styles = {
             root: {
               display: 'flex',
@@ -241,10 +272,19 @@ class ActivitiesRegister extends Component{
                             <Label for="exampleText">Lugar de salida</Label>
                             <Input required type="text" name="lugarSalida" id="" placeholder="lugar de salida" value={this.state.lugarSalida} onChange={this.handleLugarSalida} />
                         </FormGroup>
-
+{/*MAPA*/}
                         <FormGroup>
                             <Label for="exampleText">Seleccione punto de salida en el mapa</Label>
-                            <Mapa/>
+
+
+
+
+                            <Mapa handler={this.handlerMapChange} longitude={this.state.longitude}  latitude={this.state.latitude}/>
+
+
+
+
+
                         </FormGroup>
 
                          <FormGroup>
@@ -378,7 +418,14 @@ class ActivitiesRegister extends Component{
                             </MuiThemeProvider>
                         </div>
 
-                        <Button>Agregar</Button>
+                        <Button isLoading={true} >Agregar</Button>
+
+                        {this.state.loading ?(
+                            <ReactLoading type={"cylon"} color="black" />
+                        ):(
+                            <div></div>
+                        )}
+                       
 
                     </Form>
                     </Paper>
@@ -399,6 +446,16 @@ class ActivitiesRegister extends Component{
 
             )
         }
+
+             <Snackbar
+                anchorOrigin={{ vertical, horizontal }}
+                open={open}
+                onClose={this.handleClose}
+                ContentProps={{
+                    'aria-describedby': 'message-id',
+                }}
+                message={<span id="message-id">{this.state.snackbarMessage}</span>}
+            />
             </div>
             
             

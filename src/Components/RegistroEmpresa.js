@@ -6,6 +6,9 @@ import InputMask from 'react-input-mask';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
 import Snackbar from '@material-ui/core/Snackbar';
+import ReactLoading from "react-loading";
+import { browserHistory  } from 'react-router';
+
 
 
 class RegistroEmpresa extends Component{
@@ -24,7 +27,7 @@ class RegistroEmpresa extends Component{
             open: false,
             vertical: null,
             horizontal: null,          
-            
+            loading: false,
         };
 
 
@@ -84,18 +87,21 @@ class RegistroEmpresa extends Component{
   
     handleSubmit = (event) => {
 
+        this.setState({loading: true});
         axios.post('https://excursionesdatabase.firebaseapp.com/registroEmpresa', this.state)
         .then(response => {
           console.log(response, 'Proceso exitoso!');
           if(response.data){
             //this.setState({snackbarMessage:response.data.responseMessage});
-            this.setState({snackbarMessage:response.data.responseMessage, vertical: 'bottom', horizontal: 'left', open:true});
+            this.setState({snackbarMessage:response.data.responseMessage, vertical: 'bottom', horizontal: 'left', open:true, loading:false});
 
           }
           
         })
         .catch(err => {
           console.log(err, 'Error');
+          this.setState({loading: false, snackbarMessage:"Error!"});
+
         });
         event.preventDefault();
     }
@@ -160,6 +166,13 @@ class RegistroEmpresa extends Component{
 
                                     
                                     <Button style={{marginLeft: "40%"}} >Registrar</Button>
+
+                                    {this.state.loading ?(
+
+                                        <ReactLoading type={"cylon"} color="black" />
+                                        ):(
+                                            <div></div>
+                                        )}
 
                             
                                 </Form>
