@@ -5,7 +5,9 @@ import ModalComponent from "../ModalComponent";
 import { browserHistory  } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
+import ReactLoading from "react-loading";
 
+import Snackbar from '@material-ui/core/Snackbar';
 
 
 export default class Login extends Component {
@@ -40,13 +42,14 @@ export default class Login extends Component {
 
 
   handleSubmit = (event) => {
+    this.setState({loading:true});
     console.log("handle submit login ");
     axios.post('https://excursionesdatabase.firebaseapp.com/login', this.state)
     .then(response => {
       console.log(response, 'Proceso exitoso!');
       
       if(response.data.usuario){
-        this.setState({login:true});
+        this.setState({login:true, loading:false});
         localStorage.setItem("usuario",JSON.stringify(response.data));
         browserHistory.push("/Inicio");
       }
@@ -89,7 +92,13 @@ export default class Login extends Component {
                       
                       
                       <Button>   Login   </Button>
-                      
+                      {this.state.loading ?(
+
+                        <ReactLoading type={"cylon"} color="black" />
+                        ):(
+                            <div></div>
+                        )}
+
                   </div >
                   
                 </Form>

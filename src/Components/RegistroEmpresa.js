@@ -71,9 +71,7 @@ class RegistroEmpresa extends Component{
     handleDireccion(event) {
         this.setState({direccion: event.target.value});
         console.log(event.target.value);
-       
-       
-        
+  
     }
 
     handlePass(event) {
@@ -92,7 +90,7 @@ class RegistroEmpresa extends Component{
         .then(response => {
           console.log(response, 'Proceso exitoso!');
           if(response.data){
-            //this.setState({snackbarMessage:response.data.responseMessage});
+            setTimeout(function(){ browserHistory.push("/Inicio"); }, 2000);
             this.setState({snackbarMessage:response.data.responseMessage, vertical: 'bottom', horizontal: 'left', open:true, loading:false});
 
           }
