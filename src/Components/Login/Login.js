@@ -6,7 +6,6 @@ import { browserHistory  } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Paper from 'material-ui/Paper';
 import ReactLoading from "react-loading";
-
 import Snackbar from '@material-ui/core/Snackbar';
 
 
@@ -49,6 +48,7 @@ export default class Login extends Component {
       console.log(response, 'Proceso exitoso!');
       
       if(response.data.usuario){
+
         this.setState({login:true, loading:false});
         localStorage.setItem("usuario",JSON.stringify(response.data));
         browserHistory.push("/Inicio");
@@ -88,9 +88,7 @@ export default class Login extends Component {
 
                   <div style={{margin: 20, textAlign:"center"}}>
                     
-                      
-                      
-                      
+  
                       <Button>   Login   </Button>
                       {this.state.loading ?(
 
