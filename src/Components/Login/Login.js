@@ -105,7 +105,7 @@ export default class Login extends Component {
                       <div >
                         <Nav>
                           <NavItem>
-                              <NavLink href="RegistroEmpresa">Crearme una cuenta</NavLink>
+                              <NavLink style={{color:"#0099cc"}} href="RegistroEmpresa">Crearme una cuenta</NavLink>
                           </NavItem>
                         </Nav>
                       

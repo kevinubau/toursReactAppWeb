@@ -90,7 +90,10 @@ class RegistroEmpresa extends Component{
         .then(response => {
           console.log(response, 'Proceso exitoso!');
           if(response.data){
-            setTimeout(function(){ browserHistory.push("/Inicio"); }, 2000);
+              if(response.data.responseMessage == "Registro exitoso. Ya puedes iniciar sesión!"){
+                    setTimeout(function(){ browserHistory.push("/"); }, 2000);
+              }
+            
             this.setState({snackbarMessage:response.data.responseMessage, vertical: 'bottom', horizontal: 'left', open:true, loading:false});
 
           }
