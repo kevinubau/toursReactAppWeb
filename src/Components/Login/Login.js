@@ -16,7 +16,8 @@ export default class Login extends Component {
     this.state = {
       email: "",
       password: "",
-      login : false
+      login : false,
+      
     };
 
     this.handlerPassword = this.handlerPassword.bind(this);
@@ -35,6 +36,7 @@ export default class Login extends Component {
 
   }
 
+  
   
 
 
@@ -60,7 +62,6 @@ export default class Login extends Component {
     });
     event.preventDefault();
 }
-
   render() {
     //if(!this.state.login){
 
